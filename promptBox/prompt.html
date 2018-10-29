@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<script>
+    (function (doc, win) {
+      var docEl = doc.documentElement,
+          resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+          recalc = function () {
+              var clientWidth = docEl.clientWidth;
+              if (!clientWidth) return;
+              if(clientWidth>=750){
+                  docEl.style.fontSize = '100px';
+              }else{
+                  docEl.style.fontSize = 100 * (clientWidth / 750) + 'px';
+              }
+          };
+  
+      if (!doc.addEventListener) return;
+      win.addEventListener(resizeEvt, recalc, false);
+      doc.addEventListener('DOMContentLoaded', recalc, false);
+  })(document, window);
+</script>
+<style>
+    li{
+        list-style: none;
+    }
+    a{
+        text-decoration: none;
+    }
+.maskWrap {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.61);
+  z-index: 9999;
+}
+
+.maskWrap .maskLayer {
+  border-radius: 4px;
+  width: 5rem;
+  height: 3.8rem;
+  padding: .2rem;
+  background: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -2.6rem;
+  margin-top: -2.1rem;
+}
+.maskWrap .maskImg {
+  width: .86rem;
+  height: .86rem;
+  background: url(images/success.png) no-repeat;
+  background-size: 100% 100%;
+  font-size: 0;
+  margin:.5rem auto 0;
+  
+}
+.maskWrap .maskTitle {
+  width: 100%;
+  text-align: center;
+  font-size: .34rem;
+  line-height: .34rem;
+  color: #222;
+  margin: .18rem 0;
+}
+.maskWrap .maskContent {
+  width: 100%;
+  text-align: center;
+  color: #333;
+  height: .32rem;
+  line-height: .32rem;
+  font-size: .24rem;
+  color: #222;
+ 
+}
+.maskWrap .maskbtnGroup span,
+.maskWrap .maskbtnGroup a {
+  display: block;
+  width:3rem;
+  height: .5rem;
+  line-height: .5rem;
+  font-size: .24rem;
+  border-radius: .1rem;
+  margin: 10px auto;
+  cursor: pointer;
+  background: #fff;
+  color: #666666;
+  text-align: center;
+}
+.maskWrap .maskbtnGroup .winBg {
+  background: url(images/border-fill.jpg);
+  color: #fff;
+}
+
+
+.maskCross {
+  position: relative;
+  display:block;
+  width: .4rem;
+  height: .4rem;
+  overflow: hidden;
+  border-radius: .25rem;
+  background: black;
+  opacity: 0.5;
+  float: right;
+}
+.maskCross:hover {
+  cursor: pointer;
+  opacity: 1;
+}
+.maskCross::before, .maskCross::after {
+  content: '';
+  position: absolute;
+  width: 60%;
+  top: 70%;
+  right: 14%;
+  height: .04rem;
+  margin-top: -0.1rem;
+  border-radius:.05rem;
+  background: #ffffff;
+}
+.maskCross::before {
+  transform: rotate(45deg);
+}
+.maskCross::after {
+  transform: rotate(-45deg);
+}
+
+
+</style>
+</head>
+<body>
+  <span id="msg"></span>
+  <button id="dliog">弹窗</button>
+    <div class="maskWrap" id="maskWrap">
+        <div class="maskLayer" id="maskLayer">
+            <div class="maskCross" id="maskCross"></div>
+            <div class="maskImg" id="maskImg"></div>
+            <div class="maskTitle">请求成功{{ title }}</div>
+            <div class="maskContent" id="maskContent" style="color: red">提示警告信息{{ content }}</div>
+            <div class="maskbtnGroup">
+                <a href="javascript:;" class="winBg">
+                    <span class="winBg" id="confirm">确定</span></a>
+                <a href="javascript:;">
+                        <span id="cancel">取消</span></a>
+            </div>
+        </div>
+    </div>
+
+</body>
+<script>
+  document.getElementById('msg').innerText=('正常页面');
+  document.getElementById('maskWrap').style.display="none";
+    var maskImg= document.getElementById('maskImg');
+      var statusCode=0,currentImage=['images/success.png','images/error.png'];//成功状态
+    //window.onload = function(){
+      document.getElementById('dliog').onclick=function(){
+        document.getElementById('maskWrap').style.display="block";
+      }
+      document.getElementById('maskCross').onclick=function(){
+        document.getElementById('maskWrap').style.display="none";
+      }
+      if(statusCode!=0){//错误
+        maskImg.style.backgroundImage = "url("+currentImage[1]+")";
+      }else{//正确
+        document.getElementById('maskContent').innerText="";
+        maskImg.style.backgroundImage="url("+currentImage[0]+")";
+      }
+      //成功事件
+      document.getElementById('confirm').onclick=function(){
+         document.getElementById('maskWrap').style.display="none";
+       document.getElementById('msg').innerText=('确定状态')
+      }
+      //取消事件
+      document.getElementById('cancel').onclick=function(){
+         document.getElementById('maskWrap').style.display="none";
+       document.getElementById('msg').innerText=('取消状态')
+      }
+    //}
+    
+    
+    
+    
+    </script>
+</html>
