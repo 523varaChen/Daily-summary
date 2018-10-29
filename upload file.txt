@@ -1,0 +1,15 @@
+
+  $ ssh-keygen -t rsa -C "your_email@youremail.com"一路回车，最后会在目录下面生成.ssh的文件，里面有公钥的密码，在github上面新建公钥，将密码粘贴上去。
+
+
+   $mkdir test   //创建一个文件夹作为local repositor
+   $cd test     
+   $vi test.txt  //创建一个文件(代码？)
+   $git add test.txt //将文件添加至local repository
+   $git init    //初始化local repository
+   $git commit -m "first" //commit文件 不能为空否则会出错（“commit -a” 又没有添加说明会出错）
+   git remote add origin https://github.com/用户名/projectName.git 
+   //定义远程服务器别名(origin可随便取)但不能重复 若为重复错误 可rm别名重新定义：git remote rm origin
+   $git push -u origin master//将本地数据push到github上
+
+    $git pull https://github.com/用户名/项目名  //将github上的代码pull到local repository中
