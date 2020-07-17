@@ -144,10 +144,31 @@ const getURLParameters = url =>
     (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a),
     {}
   );
+
 // 事例
 getURLParameters('http://url.com/page?n=Adam&s=Smith'); // {n: 'Adam', s: 'Smith'}
 getURLParameters('google.com'); // {}
 
- 
+ 19、// 最近两周时间
+function newStart(dataDay){
+    var dataList=[];
+    for(var dataId=0;dataId<dataDay;dataId++){
+        var date = new Date(new Date().getTime() - dataId * 24 * 3600 * 1000);
+        var year = date.getFullYear();
+        var month = date.getMonth() + 1;
+        var day = date.getDate();
+        dataList.unshift(year + '/' + month + '/' + day)    
+    }
+    return dataList;
+}
+20、// 数字千分位 格式化
+ formatNumber  function(num) {
+    if (isNaN(num)) {
+        throw new TypeError("num is not a number");
+    }
+    return ("" + num).replace(/(\d{1,3})(?=(\d{3})+(?:$|\.))/g, "$1,");
+}
+
+
 
 
